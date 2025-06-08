@@ -1,8 +1,6 @@
 #import math
 import pandas
 
-from frc.P_play_area import response
-
 
 # function here
 
@@ -19,17 +17,18 @@ def yes_no(question):
         else:
             print("please enter yes or no")
 
+
 def not_blank(question):
     """checks that the user response is not blank"""
-
 
     while True:
         response = input(question)
 
-        if response !="":
+        if response != "":
             return response
 
         print("please fill this in. \n to try again")
+
 
 # when called will print instructions
 def instructions():
@@ -51,6 +50,8 @@ will tell you the cost for each severing.
 
 
     ''')
+
+
 def num_check(question):
     error = "oops - please enter an integer."
     """Checks if its a number and asks to input one if the answer is not one"""
@@ -65,23 +66,7 @@ def num_check(question):
         except ValueError:
             print(error)
 
-def string_checker(question, valid_ans_list=('ml','kg','g','l','whole'), num_letters=1):
-    """checks for users answer and checks it against a walid response list"""
 
-    while True:
-
-        response = input(question).lower()
-
-        for option in valid_ans_list:
-
-            if response == option:
-                return option
-
-            # check if it's the first letter
-            elif response == option[:num_letters]:
-                return option
-
-        print(f"please choose an option from {valid_ans_list}")
 
 
 
@@ -108,38 +93,39 @@ def generate_statement(statement, decoration, lines):
         return three_lines
 
 
+def food_units(unit_type, valid_answer_list=('ml','kg','l','g','whole')):
+ #comment later !!!!
+    while True:
 
-def food_units(unit_type):
+        response = input(unit_type).lower()
 
-    error = "please enter this list (g,kg,ml,l,whole)"
+        for option in valid_answer_list:
 
-    response = input("what is the measurement is the item whole")
+            if response == option:
+                return option
 
-    if response[0] == "kg":
-        unit_type = "kg"
+            # check if it's the first letter
+            elif response == option[unit_type:]:
+                return option
 
+        print(f"please choose an option from {valid_answer_list}")
 
+        response = input("what is the measurement, if a whole item such as eggs enter whole")
 
+        if response[0] == "k":
+                unit_type = 'kg'
 
+        if response[0] == "g":
+            unit_type = 'g'
 
+        if response[0] == "m":
+            unit_type = 'ml'
 
+        if response[0] == "l":
+            unit_type = 'l'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        if response[0] == "w":
+            unit_type = 'whole'
 
 
 
@@ -154,7 +140,6 @@ ingredient_dict = {
     'price': price,
     'servings': servings
 }
-
 
 # Main routine here
 
@@ -171,7 +156,6 @@ num_check("How many severing will this make?: ")
 recipe = not_blank("Whats the name of your recipe?:  ")
 print(f"your making {recipe}")
 
-
 print()
 while True:
     ingredient = not_blank("Ingredient: ")
@@ -180,8 +164,7 @@ while True:
         break
     num_check("Amount: ")
 
-    amount_unit = string_checker("g,ml,kg,l if a whole object type whole?")
-
+    amount_unit = ("g,ml,kg,l if a whole object type whole?")
 
     price = num_check("Price for the ingredient:$")
     continue
@@ -189,10 +172,3 @@ while True:
 # End of loop
 
 recipe_info = pandas.DataFrame(recipe)
-
-
-
-
-
-
-
