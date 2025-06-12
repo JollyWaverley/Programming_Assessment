@@ -1,7 +1,3 @@
-#import math
-import pandas
-
-
 # function here
 
 def yes_no(question):
@@ -151,7 +147,6 @@ if want_instruction == "yes":
     instructions()
 #comment later !!!!
 num_check("How many severing will this make?: ")
-
 # Asks for recipe name
 recipe = not_blank("Whats the name of your recipe?:  ")
 print(f"your making {recipe}")
@@ -164,11 +159,10 @@ while True:
         break
     num_check("Amount: ")
 
-    amount_unit = ("g,ml,kg,l if a whole object type whole?")
+    amount_unit = "g,ml,kg,l if a whole object type whole?"
 
     price = num_check("Price for the ingredient:$")
     continue
 
 # End of loop
 
-recipe_info = pandas.DataFrame(recipe)
