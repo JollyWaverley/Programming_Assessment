@@ -1,5 +1,7 @@
 # function here
 
+
+
 def yes_no(question):
     """checks if input is yes or no and asks again if anything else is input"""
     while True:
@@ -91,6 +93,7 @@ def generate_statement(statement, decoration, lines):
 
 def food_units(unit_type, valid_answer_list=('ml','kg','l','g','whole')):
  #comment later !!!!
+
     while True:
 
         response = input(unit_type).lower()
@@ -122,19 +125,22 @@ def food_units(unit_type, valid_answer_list=('ml','kg','l','g','whole')):
 
         if response[0] == "w":
             unit_type = 'whole'
+        else:
+            print(f"please try {valid_answer_list}")
 
-
-
-servings = []
+servings_amount = []
+servings = float
 ingredient = []
 amount = []
 amount_unit = []
 price = []
+
 ingredient_dict = {
     'ingredient': ingredient,
     'amount': amount,
     'price': price,
-    'servings': servings
+    'servings': servings,
+    'servings_amount': servings_amount
 }
 
 # Main routine here
@@ -145,6 +151,7 @@ print()
 
 if want_instruction == "yes":
     instructions()
+
 #comment later !!!!
 num_check("How many severing will this make?: ")
 # Asks for recipe name
@@ -159,10 +166,22 @@ while True:
         break
     num_check("Amount: ")
 
-    amount_unit = "g,ml,kg,l if a whole object type whole?"
+    food_units("g,ml,kg,l if a whole object type whole?")
 
     price = num_check("Price for the ingredient:$")
-    continue
+
+    servings_amount = price / servings
+
+
+
 
 # End of loop
+
+
+
+
+
+
+
+
 
