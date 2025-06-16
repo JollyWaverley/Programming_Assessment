@@ -11,9 +11,9 @@ def not_blank(question):
         print("please fill this in. \n to try again")
 
 
-#main rouetine starts here
-who = not_blank("Whats the name of your recipe:  ")
-print(f"you chose {who}")
+#main routine starts here
+name = not_blank("Whats the name of your recipe:  ")
+print(f"you chose {name}")
 
 
 

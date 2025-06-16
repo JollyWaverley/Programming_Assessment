@@ -1,9 +1,8 @@
-import math
+import pandas
+# functions here
 
-# function here
-
-# Checks if the user responded yes or no
 def yes_no(question):
+    """checks if input is yes or no and asks again if anything else is input"""
     while True:
         response = input(question).lower()
 
@@ -15,18 +14,18 @@ def yes_no(question):
         else:
             print("please enter yes or no")
 
-# checks if the users response was blank and makes them enter an answer to continue
+
 def not_blank(question):
     """checks that the user response is not blank"""
-
 
     while True:
         response = input(question)
 
-        if response !="":
+        if response != "":
             return response
 
         print("please fill this in. \n to try again")
+
 
 # when called will print instructions
 def instructions():
@@ -48,22 +47,28 @@ will tell you the cost for each severing.
 
 
     ''')
-# checks for an integer and if it's not one asks them to put one in
-def int_check(question):
-    error = "oops - please enter an integer."
 
+
+def num_check(question):
+    error = "oops - please enter an integer."
+    """Checks if its a number and asks to input one if the answer is not one"""
     while True:
 
         try:
 
-            response = int(input(question))
+            response = float(input(question))
 
             return response
 
         except ValueError:
             print(error)
 
+
+
+
+
 # makes a statement that looks nice and is a good way to display the answers
+
 def generate_statement(statement, decoration, lines):
     """will make the headings (3 lines), subheadings(2 lines) and emphasised text / mini-heading (1 line).
        Only use emoji for single line statements"""
@@ -84,24 +89,56 @@ def generate_statement(statement, decoration, lines):
         three_lines = f"{top_bottem}\n{middle}\n{top_bottem}"
         return three_lines
 
-def currency(x):
-    """formats number as currency ($#.##)"""
-    return "${:.2f}".format(x)
 
+def food_units(unit_type, valid_answer_list=('ml','kg','l','g','whole')):
+ #comment later !!!!
 
-# Main routine here
-# Lists to hold info on the ingredients (what it is, price, and how much they have)
-ingredient = []
-amount = []
-price = []
+    while True:
 
-ingredient_dict= {
-    'ingredient': ingredient,
-    'amount': amount,
-    'price': price
+        response = input(unit_type).lower()
+
+        for option in valid_answer_list:
+
+            if response == option:
+                return option
+
+        print(f"please choose an option from {valid_answer_list}")
+
+        response = input("what is the measurement, if a whole item such as eggs enter whole")
+
+        if response[0] == "k":
+                unit_type = 'kg'
+
+        if response[0] == "g":
+            unit_type = 'g'
+
+        if response[0] == "m":
+            unit_type = 'ml'
+
+        if response[0] == "l":
+            unit_type = 'l'
+
+        if response[0] == "w":
+            unit_type = 'whole'
+        else:
+            print(f"please try {valid_answer_list}")
+
+total_price = 0
+servings = 0
+ingredient_list = []
+weight_list = []
+amount_unit_list = []
+price_list = []
+
+ingredient_dict = {
+    'ingredient': ingredient_list,
+    'weight': weight_list,
+    'unit' : amount_unit_list,
+    'price': price_list,
+
 }
 
-
+# Main routine here
 
 # asks if they want instructions
 want_instruction = yes_no("do you want to see instructions?")
@@ -109,21 +146,49 @@ print()
 
 if want_instruction == "yes":
     instructions()
+
+#comment later !!!!
+servings = num_check("How many severing will this make?: ")
+
 # Asks for recipe name
 recipe = not_blank("Whats the name of your recipe?:  ")
 print(f"your making {recipe}")
-
 
 print()
 while True:
     ingredient = not_blank("Ingredient: ")
     # once user is done putting in info the "xxx" will end the loop showing the calculations
-    if recipe == "xxx":
+    if ingredient == "xxx":
         break
 
-    amount = int_check("Amount: ")
+    ingredient_list.append(ingredient)
 
-    price = int_check("Price:$")
+    weight = num_check("weight: ")
+    weight_list.append(weight)
+
+    unit = food_units("g,ml,kg,l if a whole object type whole?")
+    amount_unit_list.append(unit)
+
+    price = num_check("Price for the ingredient:$")
+    price_list.append(price)
+
+    total_price += price
+    servings_cost = total_price / servings
+
+
+# End of loop
+
+ingredient_frame = pandas.DataFrame(ingredient_dict)
+
+print(ingredient_frame)
+print(f"""\n
+This recipe serves {int(servings)} people
+
+this recipe cost {servings_cost} per severing 
+
+    """)
+
+
 
 
 

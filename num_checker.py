@@ -11,20 +11,3 @@ def num_check(question):
 
         except ValueError:
             print(error)
-
-def servings(question):
-
-    serving_amount = num_check(question)
-
-    servings("how many will this make")
-
-
-
-
-
-
-
-
-
-
-
