@@ -134,7 +134,7 @@ ingredient_dict = {
     'ingredient': ingredient_list,
     'weight': weight_list,
     'unit' : amount_unit_list,
-    'price': price_list,
+    'price($)': price_list,
 
 }
 
@@ -184,8 +184,9 @@ print(ingredient_frame)
 print(f"""\n
 This recipe serves {int(servings)} people
 
-this recipe cost {servings_cost} per severing 
+this recipe cost ${servings_cost:.2f} per severing 
 
+The total cost is ${total_price:.2f}
     """)
 
 
