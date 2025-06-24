@@ -90,38 +90,20 @@ def generate_statement(statement, decoration, lines):
         return three_lines
 
 
-def food_units(unit_type, valid_answer_list=('ml','kg','l','g','whole')):
- #comment later !!!!
-
+def food_units(unit_type, valid_answer_list=('milliliters','kilograms','liter','grams','whole')):
+    error = f"Please enter from {valid_answer_list}"
     while True:
 
         response = input(unit_type).lower()
 
-        for option in valid_answer_list:
 
-            if response == option:
-                return option
+        for item in valid_answer_list:
 
-        print(f"please choose an option from {valid_answer_list}")
+            if response == item[0] or response == item:
+                return item
 
-        response = input("what is the measurement, if a whole item such as eggs enter whole")
+        print(error)
 
-        if response[0] == "k":
-                unit_type = 'kg'
-
-        if response[0] == "g":
-            unit_type = 'g'
-
-        if response[0] == "m":
-            unit_type = 'ml'
-
-        if response[0] == "l":
-            unit_type = 'l'
-
-        if response[0] == "w":
-            unit_type = 'whole'
-        else:
-            print(f"please try {valid_answer_list}")
 
 total_price = 0
 servings = 0
@@ -149,7 +131,6 @@ if want_instruction == "yes":
 
 #comment later !!!!
 servings = num_check("How many severing will this make?: ")
-
 # Asks for recipe name
 recipe = not_blank("Whats the name of your recipe?:  ")
 print(f"your making {recipe}")
@@ -189,10 +170,4 @@ this recipe cost ${servings_cost:.2f} per severing
 
 The total cost is ${total_price:.2f}
     """)
-
-
-
-
-
-
 

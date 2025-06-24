@@ -1,19 +1,13 @@
-def string_checker(question, valid_ans_list=('ml','kg','g'), num_letters=1):
-    """checks for users answer and checks it against a walid response list"""
-
+def food_units(unit_type, valid_answer_list=('milliliters','kilograms','liter','grams','whole')):
+    error = f"Please enter from {valid_answer_list}"
     while True:
 
-        response = input(question).lower()
+        response = input(unit_type).lower()
 
-        for option in valid_ans_list:
 
-            if response == option:
-                return option
+        for item in valid_answer_list:
 
-            # check if it's the first letter
-            elif response == option[:num_letters]:
-                return option
+            if response == item[0] or response == item:
+                return item
 
-        print(f"please choose an option from {valid_ans_list}")
-
-string_checker("20g")
+        print(error)
