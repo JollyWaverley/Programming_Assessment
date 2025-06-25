@@ -24,7 +24,7 @@ def not_blank(question):
         if response != "":
             return response
 
-        print("please fill this in. \n to try again")
+        print("please fill this in.")
 
 
 # when called will print instructions
@@ -91,7 +91,7 @@ def generate_statement(statement, decoration, lines):
 
 
 def food_units(unit_type, valid_answer_list=('milliliters','kilograms','liter','grams','whole')):
-    error = f"Please enter from {valid_answer_list}"
+    error = f"Please enter m,k,l,g or w"
     while True:
 
         response = input(unit_type).lower()
