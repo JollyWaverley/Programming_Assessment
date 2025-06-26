@@ -1,6 +1,6 @@
 import pandas
-# functions here
 
+# functions here
 def yes_no(question):
     """checks if input is yes or no and asks again if anything else is input"""
     while True:
@@ -27,8 +27,8 @@ def not_blank(question):
         print("please fill this in.")
 
 
-# when called will print instructions
 def instructions():
+    """when called will print instructions"""
     print(''' 
 ====== Instructions ========
 
@@ -50,6 +50,7 @@ will tell you the cost for each severing.
 
 
 def num_check(question):
+    """Checks that response is any number including decimal points and negatives"""
     error = "oops - please enter an integer."
     """Checks if its a number and asks to input one if the answer is not one"""
     while True:
@@ -64,34 +65,10 @@ def num_check(question):
             print(error)
 
 
-
-
-
-# makes a statement that looks nice and is a good way to display the answers
-
-def generate_statement(statement, decoration, lines):
-    """will make the headings (3 lines), subheadings(2 lines) and emphasised text / mini-heading (1 line).
-       Only use emoji for single line statements"""
-
-    middle = f"{decoration * 3} {statement} {decoration * 3}"
-    top_bottem = decoration * len(middle)
-
-    if lines == 1:
-        return middle
-    elif lines == 2:
-        two_lines = f"{middle}\n {top_bottem}"
-        return two_lines
-
-    else:
-        print(top_bottem)
-        print(middle)
-        print(top_bottem)
-        three_lines = f"{top_bottem}\n{middle}\n{top_bottem}"
-        return three_lines
-
-
 def food_units(unit_type, valid_answer_list=('milliliters','kilograms','liter','grams','whole')):
+    """asks user for what unit and attaches it to the ingredient it was assigned with"""
     error = f"Please enter m,k,l,g or w"
+
     while True:
 
         response = input(unit_type).lower()
@@ -104,14 +81,14 @@ def food_units(unit_type, valid_answer_list=('milliliters','kilograms','liter','
 
         print(error)
 
-
+# Lists to hold info to append for pandas
 total_price = 0
 servings = 0
 ingredient_list = []
 weight_list = []
 amount_unit_list = []
 price_list = []
-
+# ingredient dict for the pandas to print well
 ingredient_dict = {
     'ingredient': ingredient_list,
     'weight': weight_list,
@@ -125,11 +102,11 @@ ingredient_dict = {
 # asks if they want instructions
 want_instruction = yes_no("do you want to see instructions?")
 print()
-
+# decides if you want_instruction it will print them
 if want_instruction == "yes":
     instructions()
 
-#comment later !!!!
+# Checks that servings is a float response is then in the list
 servings = num_check("How many severing will this make?: ")
 # Asks for recipe name
 recipe = not_blank("Whats the name of your recipe?:  ")
@@ -144,21 +121,27 @@ while True:
 
     ingredient_list.append(ingredient)
 
+    # checks weight is a float and appends weight list
     weight = num_check("weight: ")
     weight_list.append(weight)
 
+    # finds what unit users is looking for and assignees that value to the ingredient
     unit = food_units("g,ml,kg,l if a whole object type whole?")
     amount_unit_list.append(unit)
 
+    # checks that price is a float and appends price list
     price = num_check("Price for the ingredient:$")
     price_list.append(price)
 
+    # adds all prices for total price
     total_price += price
+
+    # works out cost per serving by dividing total price by servings
     servings_cost = total_price / servings
 
 
 # End of loop
-
+# Prints all data that the user gives us from appended list
 ingredient_frame = pandas.DataFrame(ingredient_dict)
 
 print()
