@@ -6,8 +6,15 @@ def num_check(question):
         try:
 
             response = float(input(question))
-
+            if response > 0:
+                return response
+            else:
+                print(error)
             return response
 
         except ValueError:
             print(error)
+
+number = num_check("choose a number ")
+print(f"you choose {number}")
+

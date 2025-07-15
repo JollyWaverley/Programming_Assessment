@@ -67,20 +67,37 @@ def generate_statement(statement, decoration, lines):
         three_lines = f"{top_bottem}\n{middle}\n{top_bottem}"
         return three_lines
 
-def num_check(question):
-    """Checks that response is any number including decimal points and negatives"""
-    error = "oops - please enter an integer."
-    """Checks if its a number and asks to input one if the answer is not one"""
+def num_check(question, num_type, exit_code=None):
+    """checks the users enter an integer / float that is more than zero
+    (or the optional exit code)"""
+
+    if num_type == "int":
+        error = "oops - please enter an number more than zero."
+        change_to = int
+    else:
+        error = "oops - please enter an number more than zero."
+        change_to = float
+
     while True:
+        response = input(question).lower()
+
+        # check for the exit code
+        if response == exit_code:
+            return response
 
         try:
+            # Change the response to an integer and check that it's more than zero
+            response = change_to(response)
 
-            response = float(input(question))
-
-            return response
+            if response > 0.9:
+                return response
+            else:
+                print(error)
 
         except ValueError:
             print(error)
+
+
 
 
 def food_units(unit_type, valid_answer_list=('milliliters','kilograms','liter','grams','whole')):
@@ -125,7 +142,7 @@ if want_instruction == "yes":
     generate_statement(instructions(),"😊",2)
 
 # Checks that servings is a float response is then in the list
-servings = num_check("How many severing will this make?: ")
+servings = num_check("How many severing will this make?: ",int)
 # Asks for recipe name
 recipe = not_blank("Whats the name of your recipe?:  ")
 print(f"your making {recipe}")
@@ -140,7 +157,7 @@ while True:
     ingredient_list.append(ingredient)
 
     # checks weight is a float and appends weight list
-    weight = num_check("weight: ")
+    weight = num_check("weight: ",float)
     weight_list.append(weight)
 
     # finds what unit users is looking for and assignees that value to the ingredient
@@ -148,7 +165,7 @@ while True:
     amount_unit_list.append(unit)
 
     # checks that price is a float and appends price list
-    price = num_check("Price for the ingredient:$")
+    price = num_check("Price for the ingredient:$",float)
     price_list.append(price)
 
     # adds all prices for total price
