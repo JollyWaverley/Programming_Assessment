@@ -117,17 +117,14 @@ def food_units(unit_type, valid_answer_list=('milliliters','kilograms','liter','
         print(error)
 
 # Lists to hold info to append for pandas
-cost_to_make = 0
 total_price = 0
 servings = 0
-amount_list = []
 ingredient_list = []
 weight_list = []
 amount_unit_list = []
 price_list = []
 # ingredient dict for the pandas to print well
 ingredient_dict = {
-    'amount_bought': amount_list,
     'ingredient': ingredient_list,
     'weight': weight_list,
     'unit' : amount_unit_list,
@@ -145,7 +142,7 @@ if want_instruction == "yes":
     generate_statement(instructions(),"😊",2)
 
 # Checks that servings is a float response is then in the list
-servings = num_check("How many severing will this make?: ",float)
+servings = num_check("How many severing will this make?: ",int)
 # Asks for recipe name
 recipe = not_blank("Whats the name of your recipe?:  ")
 print(f"your making {recipe}")
@@ -159,19 +156,13 @@ while True:
 
     ingredient_list.append(ingredient)
 
-    # Asks amount bought from store
-    amount_bought = num_check("how much was bought from store: ",float)
-    amount_list.append(amount_bought)
-
-    # finds what unit users is looking for and assignees that value to the ingredient
-    unit = food_units("g,ml,kg,l if a whole object type w?")
-    amount_unit_list.append(unit)
-
-
     # checks weight is a float and appends weight list
-
     weight = num_check("weight: ",float)
     weight_list.append(weight)
+
+    # finds what unit users is looking for and assignees that value to the ingredient
+    unit = food_units("g,ml,kg,l if a whole object type whole?")
+    amount_unit_list.append(unit)
 
     # checks that price is a float and appends price list
     price = num_check("Price for the ingredient:$",float)
@@ -183,8 +174,6 @@ while True:
     # works out cost per serving by dividing total price by servings
     servings_cost = total_price / servings
 
-    # cost_to_make = price / weight * amount
-    cost_to_make = price / weight * amount_bought
 
 # End of loop
 # Prints all data that the user gives us from appended list
@@ -196,7 +185,7 @@ print(f"""\n
 This recipe makes {int(servings)} 
 
 this recipe cost ${servings_cost:.2f} per severing
-the cost to make is ${cost_to_make:.2f}
+
 The total cost is ${total_price:.2f}
     """)
 
