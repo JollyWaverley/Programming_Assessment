@@ -121,13 +121,16 @@ def currency(x):
     """formats number as currency ($#.##)"""
     return "${:.2f}".format(x)
 
+def unit():
+    return f"{unit_list}"
+
 # Lists to hold info to append for pandas
 cost_to_make_list = []
 total_price = 0
 amount_list = []
 amount_used_list = []
 ingredient_list = []
-amount_unit_list = []
+unit_list = []
 price_list = []
 
 # ingredient dict for the pandas to print well
@@ -136,7 +139,7 @@ ingredient_dict = {
     'ingredient': ingredient_list,
     'amount used': amount_used_list,
     'amount bought': amount_list,
-    'unit' : amount_unit_list,
+    'unit' : unit_list,
     'cost to make' : cost_to_make_list,
 
 }
@@ -171,20 +174,16 @@ while True:
 
     # finds what unit users is looking for and assignees that value to the ingredient
     unit = food_units("g,ml,kg,l if a whole object type w?")
-    amount_unit_list.append(unit)
+    unit_list.append(unit)
     
     amount_used = num_check("how much is used in recipe: ", float)
     amount_used_list.append(amount_used)
-    
-    # checks weight is a float and appends weight list
-    #weight = num_check("weight: ",float)
-    #weight_list.append(weight)
 
     # checks that price is a float and appends price list
     price = num_check("Price for the ingredient:$",float)
     price_list.append(price)
 
-    cost_to_make = price / amount_used * amount_bought
+    cost_to_make = price / amount_bought * amount_used
     cost_to_make_list.append(cost_to_make)
 
     # adds all prices for total price
@@ -194,19 +193,18 @@ while True:
     servings_cost = total_price / servings
 
 
+
 # End of loop
 # Prints all data that the user gives us from appended list
 ingredient_frame = pandas.DataFrame(ingredient_dict)
+
 
 # Apply currency formatting to currency columns.
 add_dollars = ['price($)','cost to make']
 for var_item in add_dollars:
     ingredient_frame[var_item] = ingredient_frame[var_item].apply(currency)
 
-# Apply unit formatting to ingredient columns.
-add_unit = ['amount bought','amount used']
-for var_item in add_unit:
-    ingredient_frame[var_item] = ingredient_frame[var_item].apply(food_units)
+
 
 print()
 print(ingredient_frame)
