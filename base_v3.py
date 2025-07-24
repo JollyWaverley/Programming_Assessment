@@ -125,6 +125,7 @@ def unit():
     return f"{unit_list}"
 
 # Lists to hold info to append for pandas
+cost_to_make_total = 0
 cost_to_make_list = []
 total_price = 0
 amount_list = []
@@ -140,7 +141,7 @@ ingredient_dict = {
     'amount used': amount_used_list,
     'amount bought': amount_list,
     'unit' : unit_list,
-    'cost to make' : cost_to_make_list,
+    ' cost to make' : cost_to_make_list,
 
 }
 
@@ -190,7 +191,9 @@ while True:
     total_price += price
 
     # works out cost per serving by dividing total price by servings
-    servings_cost = total_price / servings
+    servings_cost = cost_to_make_total / servings
+
+    cost_to_make_total = sum(cost_to_make_list)
 
 
 
@@ -200,7 +203,7 @@ ingredient_frame = pandas.DataFrame(ingredient_dict)
 
 
 # Apply currency formatting to currency columns.
-add_dollars = ['price($)','cost to make']
+add_dollars = ['price($)',' cost to make']
 for var_item in add_dollars:
     ingredient_frame[var_item] = ingredient_frame[var_item].apply(currency)
 
@@ -211,9 +214,11 @@ print(ingredient_frame)
 print(f"""\n
 This recipe makes {int(servings)} 
 
-this recipe cost ${servings_cost:.2f} per severing
+this recipe total cost to make: ${cost_to_make_total:.2f}
 
-The total cost is ${total_price:.2f}
+this recipe cost ${servings_cost:.2f} per servings
+
+The total cost of the shopping is ${total_price:.2f}
     """)
 
 
