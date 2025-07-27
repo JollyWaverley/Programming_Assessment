@@ -121,8 +121,6 @@ def currency(x):
     """formats number as currency ($#.##)"""
     return "${:.2f}".format(x)
 
-def unit():
-    return f"{unit_list}"
 
 # Lists to hold info to append for pandas
 cost_to_make_total = 0
@@ -174,7 +172,7 @@ while True:
     amount_list.append(amount_bought)
 
     # finds what unit users is looking for and assignees that value to the ingredient
-    unit = food_units("g,ml,kg,l if a whole object type w?")
+    unit = food_units("g,m,k,l if a whole object type w?")
     unit_list.append(unit)
     
     amount_used = num_check("how much is used in recipe: ", float)
@@ -208,7 +206,7 @@ for var_item in add_dollars:
     ingredient_frame[var_item] = ingredient_frame[var_item].apply(currency)
 
 
-
+# prints the pandas and all the info needed serving cost ect
 print()
 print(ingredient_frame)
 print(f"""\n
