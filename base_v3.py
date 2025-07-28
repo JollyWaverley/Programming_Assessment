@@ -26,46 +26,37 @@ def not_blank(question):
 
         print("please fill this in.")
 
+def make_statement(statement, decoration):
+    """Decorates statements"""
+    return f"{decoration * 3} {statement} {decoration * 3}"
 
 def instructions():
     """when called will print instructions"""
     print(''' 
 ====== Instructions ========
 
-For this culculator you will
+For this calculator you will
 
 Put in the name of the recipe 
 
 Put the amount of severing you are making
 
-Put the amount of food you are using and the amounts (g,kg,ml)
+Put the amount of food you are using and the amounts (g,kg,ml,l and w for whole)
 
-Put the amount you paid for the food
+Put the amount got from store
+
+the unit you brought 
+
+the amount you used
+
+and the price of the ingredient 
 
 After you have put that info in the calculator 
 will tell you the cost for each severing.
+the total price for recipe cost and cost to make per serving
 
 
     ''')
-def generate_statement(statement, decoration, lines):
-    """will make the headings (3 lines), subheadings(2 lines) and emphasised text / mini-heading (1 line).
-       Only use emoji for single line statements"""
-
-    middle = f"{decoration * 3} {statement} {decoration * 3}"
-    top_bottem = decoration * len(middle)
-
-    if lines == 1:
-        return middle
-    elif lines == 2:
-        two_lines = f"{middle}\n {top_bottem}"
-        return two_lines
-
-    else:
-        print(top_bottem)
-        print(middle)
-        print(top_bottem)
-        three_lines = f"{top_bottem}\n{middle}\n{top_bottem}"
-        return three_lines
 
 def num_check(question, num_type, exit_code=None):
     """checks the users enter an integer / float that is more than zero
@@ -146,11 +137,12 @@ ingredient_dict = {
 # Main routine here
 
 # asks if they want instructions
+print(make_statement("recipe calculator",'😎'))
 want_instruction = yes_no("do you want to see instructions?")
 print()
 # decides if you want_instruction it will print them
 if want_instruction == "yes":
-    generate_statement(instructions(),"😊",2)
+    print(instructions())
 
 # Checks that servings is a float response is then in the list
 servings = num_check("How many severing will this make?: ",float)
